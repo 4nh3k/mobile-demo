@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
+import { MaterialIcons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -13,22 +14,37 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
+        tabBarStyle:{
+          height: 60
+        },
+        tabBarLabelStyle:{
+          fontSize: 16
+        }
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Employee',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <MaterialIcons name={'person'} color={color} size={24}/>
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="employer"
         options={{
-          title: 'Explore',
+          title: 'Employer',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <MaterialIcons name={'group'} color={color} size={24}/>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="verifier"
+        options={{
+          title: 'Verifier',
+          tabBarIcon: ({ color, focused }) => (
+            <MaterialIcons name={focused ? 'verified' : 'verified'} color={color} size={24}/>
           ),
         }}
       />
