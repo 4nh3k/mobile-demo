@@ -10,6 +10,8 @@ import {
   StatusBar,
   ImageBackground,
   TextInput,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 
 import { Collapsible } from "@/components/Collapsible";
@@ -28,43 +30,85 @@ export default function TabTwoScreen() {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isPayrollBtnVisible, setPayrollBtnVisible] = useState<boolean>(false);
 
   const onInputChange = (setter: any) => (text: any) => {
     setter(text); // Update the specific state variable
+  };
+
+  const handleSubmit = () => {
+    // Basic validation
+    if (!username || !password) {
+      Alert.alert("Validation Error", "Please fill out all fields");
+      return;
+    }
+    if (username == "TEST" && password == "TEST") {
+      Alert.alert("Login successfully");
+      setPayrollBtnVisible(true);
+    } else {
+      Alert.alert(
+        "Validation Error",
+        "Username or password is wrong, please try again"
+      );
+      return;
+    }
   };
 
   return (
     <SafeAreaView
       style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}
     >
+      {!isPayrollBtnVisible && (
+        <View className="mt-10 mx-6 bg-gray-50 p-6 rounded-xl flex flex-col">
+          <Text className="text-center text-2xl mb-6 font-bold">Sign in</Text>
+          <View className="flex flex-col gap-1 mb-4">
+            <Text className="text-sm">Username</Text>
+            <TextInput
+              className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+              placeholder="Type here..."
+              value={username}
+              onChangeText={onInputChange(setUsername)}
+            />
+          </View>
 
-
-      <View className="mt-10 mx-6 bg-gray-50 p-6 rounded-xl flex flex-col">
-        <Text className="text-center text-2xl mb-6 font-bold">Sign in</Text>
-        <View className="flex flex-col gap-1 mb-4">
-          <Text className="text-sm">Username</Text>
-          <TextInput
-            className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
-            placeholder="Type here..."
-            value={username}
-            onChangeText={onInputChange(setUsername)}
-          />
+          <View className="flex flex-col gap-1 mb-4">
+            <Text className="text-sm">Password</Text>
+            <TextInput
+              className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+              placeholder="Type here..."
+              secureTextEntry={true}
+              value={password}
+              onChangeText={onInputChange(setPassword)}
+            />
+          </View>
+          <TouchableOpacity activeOpacity={0.9} onPress={handleSubmit}>
+            <Text className="text-white font-bold mt-6 p-4 w-full h-fit bg-blue-500 self-center justify-center text-center align-middle rounded-lg">
+              LOGIN
+            </Text>
+          </TouchableOpacity>
         </View>
+      )}
 
-        <View className="flex flex-col gap-1 mb-4">
-          <Text className="text-sm">Password</Text>
-          <TextInput
-            className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
-            placeholder="Type here..."
-            value={password}
-            onChangeText={onInputChange(setPassword)}
-          />
+      {isPayrollBtnVisible && (
+        <View className="mt-10 mx-6  p-6 rounded-xl flex flex-col flex-1 pb-12">
+          <View className="my-auto">
+            <View className="mx-12">
+              <TouchableOpacity activeOpacity={0.9}>
+                <Text className="text-white font-bold mt-6 p-4 w-full h-fit bg-slate-500 self-center justify-center text-center align-middle rounded-lg">
+                  Upload Payroll
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View className="mx-12">
+              <TouchableOpacity activeOpacity={0.9}>
+                <Text className="text-white font-bold mt-6 p-4 w-full h-fit bg-slate-500 self-center justify-center text-center align-middle rounded-lg">
+                  BACK
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-
-        <Button title="Login" onPress={() => alert("Button pressed!")} />
-      </View>
-
-      <Button title="Back" onPress={() => alert("Button pressed!")} />
+      )}
     </SafeAreaView>
     // <ParallaxScrollView
     //   headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
