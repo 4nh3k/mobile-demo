@@ -11,7 +11,7 @@ import "react-native-reanimated";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ImageBackground } from "react-native";
+import ImportPayroll from "./import";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -39,6 +39,7 @@ export default function RootLayout() {
           <Stack screenOptions={{ headerShown: false }}>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
             <Stack.Screen name="+not-found" />
+            <Stack.Screen name="import"/>
           </Stack>
         {/* </ImageBackground> */}
       </ThemeProvider>
