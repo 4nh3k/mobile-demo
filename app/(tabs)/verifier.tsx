@@ -1,103 +1,60 @@
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform } from 'react-native';
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import React from 'react';
+import QrCodeScanner from "@/components/QrCodeScanner";
+import React, { useState } from "react";
+import { StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function Verifier() {
+  const [qrData, setQrData] = useState<string | null>(null);
+  const [proof, setProof] = useState<string>("");
+  const [publicSignal, setPublicSignal] = useState<string>("");
+
+  // Handle QR code data received from the scanner or image
+  const handleQrCodeScanned = (data: string) => {
+    try {
+      const parsedData = JSON.parse(data); // Parse the QR code data as JSON
+      setQrData(data);
+      setProof(parsedData.proof || ""); // Set proof from parsed data
+      setPublicSignal(parsedData.publicSignal || ""); // Set publicSignal from parsed data
+      alert(`Scanned QR Code: ${data}`);
+    } catch (error) {
+      alert("Invalid QR code format");
+    }
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={<Ionicons size={310} name="code-slash" style={styles.headerImage} />}>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image source={require('@/assets/images/react-logo.png')} style={{ alignSelf: 'center' }} />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Custom fonts">
-        <ThemedText>
-          Open <ThemedText type="defaultSemiBold">app/_layout.tsx</ThemedText> to see how to load{' '}
-          <ThemedText style={{ fontFamily: 'SpaceMono' }}>
-            custom fonts such as this one.
-          </ThemedText>
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/versions/latest/sdk/font">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user's current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful <ThemedText type="defaultSemiBold">react-native-reanimated</ThemedText> library
-          to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <View className="mt-10 mx-6 bg-gray-50 p-6 rounded-xl flex flex-col h-full">
+      <View className="flex flex-col gap-1 mb-4">
+        <Text className="text-sm">Proof</Text>
+        <TextInput
+          className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+          placeholder="Proof"
+          editable={false}
+          value={proof} // Bind to the proof state
+        />
+      </View>
+      <View className="flex flex-col gap-1 mb-4">
+        <Text className="text-sm">Public Signal</Text>
+        <TextInput
+          className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+          editable={false}
+          placeholder="Public Signal"
+          value={publicSignal} // Bind to the publicSignal state
+        />
+      </View>
+      <QrCodeScanner onQrCodeScanned={handleQrCodeScanned} />
+
+      {/* Display scanned data */}
+      {qrData && <Text style={styles.text}>Scanned Data: {qrData}</Text>}
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+  text: {
+    marginTop: 20,
+    fontSize: 16,
+    textAlign: "center",
   },
 });

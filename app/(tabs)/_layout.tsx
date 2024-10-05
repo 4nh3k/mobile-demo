@@ -1,50 +1,58 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { Tabs } from "expo-router";
+import React from "react";
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { MaterialIcons } from '@expo/vector-icons';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
+import { MaterialIcons } from "@expo/vector-icons";
+import { NativeWindStyleSheet } from "nativewind";
 
+NativeWindStyleSheet.setOutput({
+  default: "native",
+});
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
-        tabBarStyle:{
-          height: 60
+        tabBarStyle: {
+          height: 60,
         },
-        tabBarLabelStyle:{
-          fontSize: 16
-        }
-      }}>
+        tabBarLabelStyle: {
+          fontSize: 16,
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Employee',
+          title: "Employee",
           tabBarIcon: ({ color, focused }) => (
-            <MaterialIcons name={'person'} color={color} size={24}/>
+            <MaterialIcons name={"person"} color={color} size={24} />
           ),
         }}
       />
       <Tabs.Screen
         name="employer"
         options={{
-          title: 'Employer',
+          title: "Employer",
           tabBarIcon: ({ color, focused }) => (
-            <MaterialIcons name={'group'} color={color} size={24}/>
+            <MaterialIcons name={"group"} color={color} size={24} />
           ),
         }}
       />
       <Tabs.Screen
         name="verifier"
         options={{
-          title: 'Verifier',
+          title: "Verifier",
           tabBarIcon: ({ color, focused }) => (
-            <MaterialIcons name={focused ? 'verified' : 'verified'} color={color} size={24}/>
+            <MaterialIcons
+              name={focused ? "verified" : "verified"}
+              color={color}
+              size={24}
+            />
           ),
         }}
       />

@@ -1,77 +1,68 @@
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import React from "react";
-import { Image, Platform, StyleSheet, Text } from "react-native";
+import { LoginModal } from "@/components/LoginModal";
+import React, { useState } from "react";
+import {
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
+  const insets = useSafeAreaInsets();
+
+  const [isPayrollBtnVisible, setPayrollBtnVisible] = useState<boolean>(false);
+
+  const onLoginClose = () => {
+    console.log("onLoginClose");
+    setPayrollBtnVisible(true);
+    console.log(isPayrollBtnVisible);
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "transparent", dark: "transparent" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
+    <SafeAreaView
+      style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <Text className="text-3xl font-bold mb-[30px] text-white">
-          Test with nativewind
-        </Text>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: "cmd + d", android: "cmd + m" })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this
-          starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{" "}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+      {!isPayrollBtnVisible && <LoginModal onClose={onLoginClose} />}
+
+      {isPayrollBtnVisible && (
+        <View className="mt-10 mx-6 bg-gray-50 p-6 rounded-xl flex flex-col">
+          <View className="flex flex-col gap-1 mb-4">
+            <Text className="text-sm">Identifier</Text>
+            <TextInput
+              className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+              placeholder="Type here..."
+            />
+          </View>
+          <View className="flex flex-col gap-1 mb-4">
+            <Text className="text-sm">Salary (VND)</Text>
+            <TextInput
+              className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+              placeholder="Type here..."
+            />
+          </View>
+          <View className="flex flex-col gap-1 mb-4">
+            <Text className="text-sm">Lowerbound (VND)</Text>
+            <TextInput
+              className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+              placeholder="Type here..."
+            />
+          </View>
+          <View className="flex flex-col gap-1 mb-4">
+            <Text className="text-sm">Upperbound (VND)</Text>
+            <TextInput
+              className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+              placeholder="Type here..."
+            />
+          </View>
+          <TouchableOpacity activeOpacity={0.9}>
+            <Text className="text-white font-bold mt-6 p-4 w-full h-fit bg-blue-500 self-center justify-center text-center align-middle rounded-lg">
+              Prove
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
-  },
-});
