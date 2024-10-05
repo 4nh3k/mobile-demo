@@ -1,23 +1,71 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { StyleSheet, Text, Image, Platform, View, Button, SafeAreaView, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  Image,
+  Platform,
+  View,
+  Button,
+  SafeAreaView,
+  StatusBar,
+  ImageBackground,
+  TextInput,
+} from "react-native";
 
 import { Collapsible } from "@/components/Collapsible";
 import { ExternalLink } from "@/components/ExternalLink";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import React, { useState } from "react";
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from "react-native-safe-area-context";
 
 export default function TabTwoScreen() {
+  const insets = useSafeAreaInsets();
+
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const onInputChange = (setter: any) => (text: any) => {
+    setter(text); // Update the specific state variable
+  };
+
   return (
-    <SafeAreaProvider>
-    <SafeAreaView className="mt-[10rem]">
-        <Text>Username</Text>
-        <Text>This is a simple app.</Text>
-        <Button title="Click me" onPress={() => alert("Button pressed!")} />
+    <SafeAreaView
+      style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}
+    >
+
+
+      <View className="mt-10 mx-6 bg-gray-50 p-6 rounded-xl flex flex-col">
+        <Text className="text-center text-2xl mb-6 font-bold">Sign in</Text>
+        <View className="flex flex-col gap-1 mb-4">
+          <Text className="text-sm">Username</Text>
+          <TextInput
+            className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+            placeholder="Type here..."
+            value={username}
+            onChangeText={onInputChange(setUsername)}
+          />
+        </View>
+
+        <View className="flex flex-col gap-1 mb-4">
+          <Text className="text-sm">Password</Text>
+          <TextInput
+            className="bg-white p-2 text-sm border-2 border-gray-100 rounded-lg"
+            placeholder="Type here..."
+            value={password}
+            onChangeText={onInputChange(setPassword)}
+          />
+        </View>
+
+        <Button title="Login" onPress={() => alert("Button pressed!")} />
+      </View>
+
+      <Button title="Back" onPress={() => alert("Button pressed!")} />
     </SafeAreaView>
-    </SafeAreaProvider>
     // <ParallaxScrollView
     //   headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
     //   headerImage={<Ionicons size={310} name="code-slash" style={styles.headerImage} />}>
