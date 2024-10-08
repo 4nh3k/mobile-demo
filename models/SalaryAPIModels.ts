@@ -11,7 +11,6 @@ export interface ProofCalculationResponse {
     proof: object;
     publicSignals: object;
   };
-  msg?: string;
 }
 
 export interface VerifyRequest {
