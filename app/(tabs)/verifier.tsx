@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { ScrollView } from "react-native";
 
 export default function Verifier() {
   const [qrData, setQrData] = useState<string | null>(null);
@@ -63,7 +64,7 @@ export default function Verifier() {
   };
 
   return (
-    <View className="mt-10 mx-6 bg-gray-50 p-6 rounded-xl flex flex-col h-full">
+    <ScrollView className="mt-10 mx-6 bg-gray-50 p-6 rounded-xl flex flex-col h-full">
       <View className="flex flex-col gap-1 mb-4">
         <Text className="text-sm">Proof</Text>
         <TextInput
@@ -98,7 +99,7 @@ export default function Verifier() {
           style={{ marginTop: 20 }} // Add some margin if necessary
         />
       )}
-    </View>
+    </ScrollView>
   );
 }
 

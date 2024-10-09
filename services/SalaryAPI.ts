@@ -11,13 +11,13 @@ class SalaryAPI {
   private baseURL: string;
 
   constructor() {
-    this.baseURL = "http://localhost:3000";
+    this.baseURL = "https://zk-salary-production.up.railway.app";
   }
 
   async uploadFile(file: any): Promise<AxiosResponse<FileUploadResponse>> {
     const formData = new FormData();
-    const fileBlob = new Blob([file], { type: file.type });
-    formData.append("file", fileBlob, file.name);
+
+    formData.append("file", file);
 
     return await axios.post<FileUploadResponse>(
       `${this.baseURL}/upload`,

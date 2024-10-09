@@ -49,14 +49,14 @@ export default function TabTwoScreen() {
           <View className="my-auto">
             <View className="mx-12">
               <Pressable onPress={handleNavigate} style={{ opacity: 0.9 }}>
-                <Text className="text-white font-bold mt-6 p-4 w-full h-fit bg-slate-500 self-center justify-center text-center align-middle rounded-lg">
-                  Upload Payroll
+                <Text className="text-white font-bold mt-6 p-4 w-full h-fit bg-[#2894f4] self-center justify-center text-center align-middle rounded-lg">
+                  UPLOAD PAYROLL
                 </Text>
               </Pressable>
             </View>
             <View className="mx-12">
               <Pressable onPress={handleBack} style={{ opacity: 0.9 }}>
-                <Text className="text-white font-bold mt-6 p-4 w-full h-fit bg-slate-500 self-center justify-center text-center align-middle rounded-lg">
+                <Text className="text-white font-bold mt-6 p-4 w-full h-fit bg-[#2894f4] self-center justify-center text-center align-middle rounded-lg">
                   BACK
                 </Text>
               </Pressable>
