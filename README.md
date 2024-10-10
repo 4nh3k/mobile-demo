@@ -2,6 +2,8 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+Guide to install an emulator: https://docs.expo.dev/workflow/android-studio-emulator/ 
+
 ## Get started
 
 1. Install dependencies
@@ -18,8 +20,8 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/) (press w)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/) (press a)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
